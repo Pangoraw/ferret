@@ -5,6 +5,7 @@ import (
 	"github.com/MontFerret/ferret/pkg/stdlib/arrays"
 	"github.com/MontFerret/ferret/pkg/stdlib/collections"
 	"github.com/MontFerret/ferret/pkg/stdlib/html"
+	"github.com/MontFerret/ferret/pkg/stdlib/date_time"
 	"github.com/MontFerret/ferret/pkg/stdlib/objects"
 	"github.com/MontFerret/ferret/pkg/stdlib/strings"
 	"github.com/MontFerret/ferret/pkg/stdlib/types"
@@ -25,6 +26,7 @@ func NewLib() map[string]core.Function {
 	add(collections.NewLib())
 	add(arrays.NewLib())
 	add(objects.NewLib())
+	add(datetime.NewLib())
 	add(html.NewLib())
 	add(utils.NewLib())
 
