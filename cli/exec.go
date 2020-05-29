@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/signal"
+	"syscall"
 )
 
 func ExecFile(pathToFile string, opts Options) {
@@ -40,7 +41,7 @@ func Exec(query string, opts Options) {
 	ctx, cancel := opts.WithContext(context.Background())
 
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 
 	go func() {
 		for {
