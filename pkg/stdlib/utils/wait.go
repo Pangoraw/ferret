@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/MontFerret/ferret/pkg/runtime/core"
@@ -10,7 +11,7 @@ import (
 
 // Wait pauses the execution for a given period.
 // @param timeout (Float|Int) - Number value which indicates for how long to stop an execution.
-func Wait(_ context.Context, args ...core.Value) (core.Value, error) {
+func Wait(ctx context.Context, args ...core.Value) (core.Value, error) {
 	err := core.ValidateArgs(args, 1, 1)
 
 	if err != nil {
@@ -19,7 +20,13 @@ func Wait(_ context.Context, args ...core.Value) (core.Value, error) {
 
 	arg := values.ToInt(args[0])
 
-	time.Sleep(time.Millisecond * time.Duration(arg))
+	timer := time.NewTimer(time.Millisecond * time.Duration(arg))
+	select {
+	case <-ctx.Done():
+		timer.Stop()
+		return values.None, errors.New("context cancelled")
+	case <-timer.C:
+	}
 
 	return values.None, nil
 }
