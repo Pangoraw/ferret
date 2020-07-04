@@ -1,0 +1,3 @@
+LET doc = DOCUMENT("https://google.com", {driver: "webdriver.firefox"})
+
+RETURN true;

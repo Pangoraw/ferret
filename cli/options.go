@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"github.com/MontFerret/ferret/pkg/drivers/webdriver"
 
 	"github.com/MontFerret/ferret/pkg/drivers"
 	"github.com/MontFerret/ferret/pkg/drivers/cdp"
@@ -44,6 +45,12 @@ func (opts Options) WithContext(ctx context.Context) (context.Context, context.C
 	ctx = drivers.WithContext(
 		ctx,
 		cdpDriver,
+	)
+
+	webDriver := webdriver.New()
+	ctx = drivers.WithContext(
+		ctx,
+		webDriver,
 	)
 
 	return context.WithCancel(ctx)
